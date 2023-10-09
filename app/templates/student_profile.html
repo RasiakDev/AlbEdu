@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "header.html" %}
+    {%for object in object_list%}
+    <li class="list-group">
+        <div class="list-group-item">
+            <h3 >{{object.name}} {{object.last_name}}</h3>
+            {% if perms.app.change_student %}
+                <a  href="{%url 'update_student' object.id%}">Edit</a>
+            {% endif %}
+            {% if perms.app.delete_student %}
+                <a href="{% url 'delete_student' object.id%}">Delete</a>
+            {% endif %}
+        </div>
+    </li>
+    {%endfor%}
+    {% comment %} Check if has permission to create student {% endcomment %}
+    {% if perms.app.create_student %}
+        <form action="{%url 'create_student' %}">
+            {% csrf_token %}
+            <button class="btn btn-primary" type="submit">Create Student</button>
+        </form>
+    {% endif %}
+    
+</body>
+</html>

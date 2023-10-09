@@ -11,3 +11,5 @@ class StudentAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(models.Parent, ParentAdmin)
 admin.site.register(models.Student, StudentAdmin)
+admin.site.register(models.Teacher)
+admin.site.register(models.Classroom)
