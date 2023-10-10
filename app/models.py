@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 import math
-
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -37,7 +37,7 @@ class Student(models.Model):
     name=models.CharField(max_length=128)
     last_name=models.CharField(max_length=128)
     classroom_id=models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True)
-    parent_id=models.ForeignKey(Parent, on_delete=models.CASCADE, null=True, blank=True)
+    parent_id=models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     created=models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
