@@ -15,9 +15,17 @@
           <li class="nav-item">
             <a class="nav-link" href="{%url 'student'%}">Students</span></a>
           </li>
+          {% if perms.app.view_classroom %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'classrooms'%}">Classrooms</a>
           </li>
+          {% endif %}          
+        
+          {% if perms.app.view_schedule %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'classrooms'%}">Schedules</a>
+          </li>
+          {% endif %}          
         </ul>
 
         {% if user.is_authenticated %}
