@@ -1,0 +1,19 @@
+{% include "header.html" %}
+<div class="container p-0 my-3 border">
+    <table class="table">
+        <thead>
+            <tr class="thead-light">
+                <th scope="col">Classroom Name</th>
+                <th scope="col">Teacher</th>
+                <th><a href="{%url 'create_classroom' %}">Create Classroom</a></th>
+            </tr>
+        </thead>
+            {%for classroom in classrooms%}        
+            <tr>
+                <td >{{classroom.name}}</td>
+                <td>{{classroom.teacher_id}}</td>
+                <td><a href="{%url 'update_classroom' classroom.id%}">Edit</a></td>
+            </tr>
+            {%endfor%}
+        </table>
+</div>

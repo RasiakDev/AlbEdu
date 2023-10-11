@@ -1,33 +1,40 @@
-from django.forms import CharField, ModelForm, Form, ModelChoiceField
-from django.views.generic.edit import FormView
-from .models import Parent, Student, Classroom
-from django.urls import reverse_lazy
+from typing import Any
+from django.forms import CharField, ModelForm, ModelChoiceField
+from .models import Parent, Student, Classroom, Teacher
+from django.contrib.auth.models import User
 
 class ParendForm(ModelForm):
     class Meta:
         model = Parent
         fields = "__all__"
 
-# class StudentForm(ModelForm):
-#     class Meta:
-#         model = Student
-#         fields = "__all__"
+
+class StudentForm(ModelForm):
+    class Meta:
+        model = Student
+        fields='__all__'    
     
-#     def clean(self):
-#         result = super().clean()
-        
-#         return result
+    name = CharField(max_length=128)
+    last_name = CharField(max_length=128)
+    parent_id = ModelChoiceField(queryset= User.objects.filter(groups__name='Parent'))
+    classroom_id = ModelChoiceField(queryset=Classroom.objects.all())
 
-#     # def clean(self):
-#     #     result = super().clean()
-#     #     return result
+    def clean_name(self):
+        initial = self.cleaned_data['name']
+        name = initial.capitalize()
+        return name
+    def clean_last_name(self):
+        initial = self.cleaned_data['last_name']
+        last_name = initial.capitalize()
+        return last_name
+    
+class ClassroomForm(ModelForm):
+    
+    class Meta:
+        model = Classroom
+        fields = '__all__'
 
-
-# class StudentForm(Form):
-
-#   name = CharField(max_length=128)
-#   last_name = CharField(max_length=128)
-#   classroom_id = ModelChoiceField(queryset=Classroom.objects.all())
-#   parent_id = ModelChoiceField(Parent.objects.all())
-
- 
+    name = CharField(max_length=255)
+    teacher_id = ModelChoiceField(queryset=Teacher.objects.all())
+    # created_by = ModelChoiceField(queryset=User.objects.filter(groups__name='Teacher'))
+    
