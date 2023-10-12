@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import math
 from django.contrib.auth.models import User, Group
 from django.db import models
@@ -50,6 +50,11 @@ class Student(models.Model):
 def round_dt(dt, delta):
     return datetime.min + math.floor((dt - datetime.min) / delta) * delta
 delta = timedelta(minutes=30)
+start_time =round_dt(datetime.now(), delta=delta)
+end_time = round_dt(datetime.now(), delta)+ timedelta(hours=2, minutes=30)
+
+
+# start_time = now.strftime("%H:%M:%S")
 
 def double_minutes(minute):
     if minute < 10:
@@ -59,15 +64,27 @@ def double_minutes(minute):
     
 class Schedule(models.Model):
     classroom_id=models.ForeignKey(Classroom, on_delete=models.CASCADE)
-    start_hour=models.DateTimeField(default=round_dt(datetime.now(), delta))
-    end_hour=models.DateTimeField(default=round_dt(datetime.now(), delta)+ timedelta(hours=2, minutes=30))
-    created=models.DateTimeField(auto_now_add=True)
-    presence_list= models.JSONField('Presence List')
+    # start_hour=models.DateTimeField(default=round_dt(datetime.now(), delta))
+    # end_hour=models.DateTimeField(default=round_dt(datetime.now(), delta)+ timedelta(hours=2, minutes=30))
+    start_hour=models.TimeField(default=start_time.time())
+    end_hour=models.TimeField(default=end_time.time())
+    created=models.DateField(auto_now_add=True)
+    presence_list= models.JSONField('Presence List',null=True,blank=True)
 
+    weekDaysMapping = ("Monday", "Tuesday", 
+                        "Wednesday", "Thursday",
+                        "Friday", "Saturday",
+                        "Sunday")
+    def get_week_day(self):
+        return self.weekDaysMapping[self.created.weekday()]
+   
+    def get_students(self):
+        return Student.objects.filter(classroom_id = self.classroom_id)  
+ 
     def __str__(self) -> str:
-        return "%s: %s %s:%s - %s:%s" % \
-            (self.classroom_id.name, \
-             self.start_hour.date(),\
+        return "%s %s: %s:%s - %s:%s" % \
+            (self.get_week_day(),\
+            self.classroom_id.name, \
             self.start_hour.hour, \
             double_minutes(self.start_hour.minute),\
             self.end_hour.hour, \

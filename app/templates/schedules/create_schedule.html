@@ -1,0 +1,7 @@
+{% include "header.html" %}
+
+<form method="post">
+    {% csrf_token %}
+    <table>{{form}}</table>
+    <button type="submit">Save</button>
+</form>

@@ -1,6 +1,6 @@
 from typing import Any
-from django.forms import CharField, ModelForm, ModelChoiceField
-from .models import Parent, Student, Classroom, Teacher
+from django.forms import CharField, ModelForm, ModelChoiceField, DateField, TimeField, SplitDateTimeField, SelectDateWidget
+from .models import Parent, Student, Classroom, Teacher, Schedule, start_time, end_time
 from django.contrib.auth.models import User
 
 class ParendForm(ModelForm):
@@ -38,3 +38,11 @@ class ClassroomForm(ModelForm):
     teacher_id = ModelChoiceField(queryset=Teacher.objects.all())
     # created_by = ModelChoiceField(queryset=User.objects.filter(groups__name='Teacher'))
     
+
+class ScheduleForm(ModelForm):
+    class Meta:
+        model = Schedule
+        fields = '__all__'
+    classroom_id = ModelChoiceField(queryset=Classroom.objects.all())
+    start_hour= TimeField(initial=start_time)
+    end_hour = TimeField(initial=end_time)

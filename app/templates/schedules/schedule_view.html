@@ -1,0 +1,32 @@
+{% include "header.html" %}
+
+<div class="container-fluid">
+    <ul>       
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Date</th> 
+                    <th scope="col">Classroom</th> 
+                    <th scope="col">Teacher</th> 
+                    <th scope="col">Students</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for schedule in schedules%}
+                <tr>
+                    <td>{{schedule.get_week_day}} {{schedule.created}}</td>
+                    <td>{{schedule.classroom_id}}</td>
+                    <td>{{schedule.classroom_id.teacher_id}}</td>
+                    <td>{{schedule.get_students|length}}</td>
+                    <td><a href="{% url "classrooms" %}" class="btn btn-secondary" >View</a></td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+        
+    </ul>
+    <a class="btn btn-primary" href="{% url "create_schedule" %}">Create Schedule</a>
+</div>

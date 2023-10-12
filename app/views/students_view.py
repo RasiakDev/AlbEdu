@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render
 from app.forms import StudentForm
 from ..models import Student
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import (
   LoginRequiredMixin, PermissionRequiredMixin
 )
@@ -21,6 +21,11 @@ def student_view(request):
     object_list = show_students(request)
     context = {'object_list': object_list}
     return render(request, 'students/students_view.html', context=context )
+
+class StudentProfile(DetailView):
+    model = Student
+    template_name = 'students/student_profile'
+        
 
 LOGGER = getLogger()
 class StudentCreateView(PermissionRequiredMixin,CreateView):
