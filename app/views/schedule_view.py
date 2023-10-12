@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from app.forms import ScheduleForm
-from django.views.generic import CreateView, View, UpdateView
+from django.views.generic import CreateView, View, UpdateView, DetailView
 from app.models import Schedule
 from django.contrib.auth.mixins import (
   LoginRequiredMixin, PermissionRequiredMixin
@@ -12,6 +12,9 @@ class ScheduleView(View):
         context = {'schedules': Schedule.objects.all()}
         return render(request, "schedules/schedule_view.html", context=context)
         
+class ScheduleProfile(DetailView):
+    model = Schedule
+    template_name = 'schedules/schedule_profile.html'
 
     
 class CreateScheduleView(CreateView):

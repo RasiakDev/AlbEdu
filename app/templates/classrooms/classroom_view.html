@@ -6,13 +6,15 @@
                 <th scope="col">Classroom Name</th>
                 <th scope="col">Teacher</th>
                 <th><a href="{%url 'create_classroom' %}">Create Classroom</a></th>
+                <th></th>
             </tr>
         </thead>
             {%for classroom in classrooms%}        
             <tr>
-                <td >{{classroom.name}}</td>
+                <td><a href="{% url "classroom_profile" classroom.id %}">{{classroom.name}}</a></td>
                 <td>{{classroom.teacher_id}}</td>
                 <td><a href="{%url 'update_classroom' classroom.id%}">Edit</a></td>
+                <td><a class="btn btn-danger" href="{%url 'delete_classroom' classroom.id%}">Delete</a></td>
             </tr>
             {%endfor%}
         </table>

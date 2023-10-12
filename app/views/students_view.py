@@ -24,7 +24,7 @@ def student_view(request):
 
 class StudentProfile(DetailView):
     model = Student
-    template_name = 'students/student_profile'
+    template_name = 'students/student_profile.html'
         
 
 LOGGER = getLogger()

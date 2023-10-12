@@ -2,7 +2,7 @@ from logging import getLogger
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from app.forms import ClassroomForm
-from django.views.generic import CreateView, View, UpdateView, DetailView
+from django.views.generic import CreateView, View, UpdateView, DetailView, DeleteView
 from app.models import Classroom
 from django.contrib.auth.mixins import (
   LoginRequiredMixin, PermissionRequiredMixin
@@ -15,11 +15,9 @@ class ClassroomView(PermissionRequiredMixin, View):
         return render(request, "classrooms/classroom_view.html", context=context)
         
     
-# class ClassroomProfile(DetailView):
-#     template_name = 'classrooms/classroom_profile.html'
-#     model = Classroom
-#     def get_queryset(self):
-#         return Classroom.objects.filter(id = self.id)
+class ClassroomProfile(DetailView):
+    template_name = 'classrooms/classroom_profile.html'
+    model = Classroom
     
     
     
@@ -39,3 +37,8 @@ class ClassroomUpdateView(UpdateView):
       fields = '__all__'
       template_name = 'classrooms/create_classroom.html'
       success_url = reverse_lazy('classrooms')
+
+class ClassroomDeleteView(DeleteView):
+    model = Classroom
+    template_name = 'form_confirm_delete.html'
+    success_url = reverse_lazy('classrooms')

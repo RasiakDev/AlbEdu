@@ -19,7 +19,7 @@
                     <td>{{schedule.classroom_id}}</td>
                     <td>{{schedule.classroom_id.teacher_id}}</td>
                     <td>{{schedule.get_students|length}}</td>
-                    <td><a href="{% url "classrooms" %}" class="btn btn-secondary" >View</a></td>
+                    <td><a href="{% url "schedule_profile" schedule.id %}" class="btn btn-secondary" >View</a></td>
                     
                 </tr>
                 {% endfor %}
