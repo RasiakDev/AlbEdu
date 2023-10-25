@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Your Template</title>
+</head>
+<body>
+
+<h1>Objects List</h1>
+
+<form method="post" action="{% url 'presence_form' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit">
+</form>
+
+<ul>
+  {% for obj in objects %}
+    <li>{{ obj.name }} <!-- Display other fields as needed --></li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

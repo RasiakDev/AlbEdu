@@ -1,3 +1,19 @@
 {% include "header.html" %}
+{{ self }}
+<a class="btn btn-primary" href="{% url 'create_schedule' classroom.id%}">Create Schedule</a>
+<table>
+    <thead>
+        <tr>
+            <th>Schedules for this classroom:</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+            <tr>
+                <td><a class="btn btn-success" href="{% url 'schedule_profile' schedule.id %}">{{ schedule}}</a></td>
+            </tr>
+{% endfor %}
+    </tbody>
+</table>
 
-{{classroom}}
+

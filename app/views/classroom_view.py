@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from app.forms import ClassroomForm
 from django.views.generic import CreateView, View, UpdateView, DetailView, DeleteView
-from app.models import Classroom
+from app.models import Classroom, Schedule
 from django.contrib.auth.mixins import (
   LoginRequiredMixin, PermissionRequiredMixin
 )
@@ -18,8 +18,14 @@ class ClassroomView(PermissionRequiredMixin, View):
 class ClassroomProfile(DetailView):
     template_name = 'classrooms/classroom_profile.html'
     model = Classroom
-    
-    
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ClassroomProfile,
+                        self).get_context_data(*args, **kwargs)
+        # add extra field
+        id = self.kwargs['pk']
+        context["schedules"] = Schedule.objects.filter(classroom_id = id )
+        return context
     
 LOGGER = getLogger()
 class ClassroomCreateView(CreateView):

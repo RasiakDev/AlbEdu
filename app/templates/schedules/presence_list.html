@@ -1,0 +1,13 @@
+{% include 'header.html' %}
+
+<!-- student_list.html -->
+<form method="post">
+    {% csrf_token %}
+    {% for student in students %}
+        <label>
+            <input type="checkbox" name="is_selected_{{ student.id }}"}>
+            {{ student.name }}
+        </label><br>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" /> <title>Document</title>
   </head>
   <body>
@@ -21,11 +22,11 @@
           </li>
           {% endif %}          
         
-          {% if perms.app.view_schedule %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'schedules'%}">Schedules</a>
-          </li>
-          {% endif %}          
+{#          {% if perms.app.view_schedule %}#}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link" href="{% url 'schedules'%}">Schedules</a>#}
+{#          </li>#}
+{#          {% endif %}          #}
         </ul>
 
         {% if user.is_authenticated %}
@@ -40,4 +41,6 @@
       </div>
     </nav>
   </body>
+
+
 </html>
