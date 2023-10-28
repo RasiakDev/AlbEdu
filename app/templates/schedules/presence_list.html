@@ -1,11 +1,11 @@
 {% include 'header.html' %}
 
 <!-- student_list.html -->
-<form method="post">
+<form method="post" action="{% url 'presence_list_save' schedule.id%}">
     {% csrf_token %}
     {% for student in students %}
         <label>
-            <input type="checkbox" name="is_selected_{{ student.id }}"}>
+            <input type="checkbox" name="selected_students" value="{{ student.id }}">
             {{ student.name }}
         </label><br>
     {% endfor %}

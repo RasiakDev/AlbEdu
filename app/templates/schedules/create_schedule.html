@@ -1,9 +1,14 @@
 {% include 'header.html' %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Next">
-</form>
+{% if students %}
+	<form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Next">
+    </form>
+    {% else %}
+    <h1>No students for this classroom</h1>
+{% endif %}
+
 
 

@@ -1,13 +1,6 @@
-from typing import Any
 from django.forms import CharField, ModelForm, ModelChoiceField, TimeField, ChoiceField, Select, Form, BooleanField
-from .models import Parent, Student, Classroom, Teacher, Schedule, Present
+from .models import Student, Classroom, Schedule, Present
 from django.contrib.auth.models import User
-
-class ParendForm(ModelForm):
-    class Meta:
-        model = Parent
-        fields = "__all__"
-
 
 class StudentForm(ModelForm):
     class Meta:
@@ -35,7 +28,7 @@ class ClassroomForm(ModelForm):
         fields = '__all__'
 
     name = CharField(max_length=255)
-    teacher_id = ModelChoiceField(queryset=Teacher.objects.all())
+    teacher_id = ModelChoiceField(queryset=User.objects.all())
     # created_by = ModelChoiceField(queryset=User.objects.filter(groups__name='Teacher'))
 
 
@@ -48,4 +41,4 @@ class ScheduleForm(ModelForm):
 class PresenceForm(ModelForm):
     class Meta:
         model = Present
-        fields = ['presence']
+        fields = ['is_present', 'student']

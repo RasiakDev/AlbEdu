@@ -9,8 +9,6 @@ class StudentAdmin(admin.ModelAdmin):
     list_display = ('name', 'last_name', 'classroom_id', 'parent_id')
     
 # Register your models here.
-admin.site.register(models.Parent, ParentAdmin)
 admin.site.register(models.Student, StudentAdmin)
-admin.site.register(models.Teacher)
 admin.site.register(models.Classroom)
 admin.site.register(models.Schedule)

@@ -1,22 +1,22 @@
+{% include "header.html" %}
+{%for object in object_list%}
+<li class="list-group">
 
-    {% include "header.html" %}
-    {%for object in object_list%}
-    <li class="list-group">
-        <div class="list-group-item">
-            <a href="{% url "student_profile" object.id%}"> <h3 >{{object.name}} {{object.last_name}}</h3></a>
-            {% if perms.app.change_student %}
-                <a  href="{%url 'update_student' object.id%}">Edit</a>
-            {% endif %}
-            {% if perms.app.delete_student %}
-                <a href="{% url 'delete_student' object.id%}">Delete</a>
-            {% endif %}
-        </div>
-    </li>
-    {%endfor%}
-    {% comment %} Check if has permission to create student {% endcomment %}
-    {% if perms.app.create_student %}
-        <form action="{%url 'create_student' %}">
-            {% csrf_token %}
-            <button class="btn btn-primary" type="submit">Create Student</button>
-        </form>
-    {% endif %}
+    <div class="list-group-item">
+        <a href="{% url "student_profile" object.id%}"> <h3 >{{object.name}} {{object.last_name}}</h3></a>
+        {% if perms.app.change_student %}
+            <a  href="{%url 'update_student' object.id%}">Edit</a>
+        {% endif %}
+        {% if perms.app.delete_student %}
+            <a href="{% url 'delete_student' object.id%}">Delete</a>
+        {% endif %}
+    </div>
+</li>
+{%endfor%}
+{% comment %} Check if has permission to create student {% endcomment %}
+{% if perms.app.create_student %}
+    <form action="{%url 'create_student' %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">Create Student</button>
+    </form>
+{% endif %}

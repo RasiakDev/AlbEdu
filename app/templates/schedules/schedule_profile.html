@@ -1,3 +1,39 @@
-{% include "header.html" %}
+<{% include "header.html" %}
 {{schedule}}
-{{ students }}
+
+{{ presence_list.student }}
+<form method="post" action="{% url 'presence_list_update' schedule.id%}">
+    {% csrf_token %}
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>
+                    Student
+                </th>
+                <th>
+                    Present
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for presence in presence_list %}
+                <tr>
+                    <td>
+                        {{ presence.student }}
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                        {% if presence.is_present %}
+                        	checked
+                        {% endif %}
+                        name="selected_students" value="{{ presence.student.id }}"
+                        >
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit">Update</button>
+</form>
