@@ -1,0 +1,32 @@
+{% include "header.html" %}
+
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown button
+  </button>
+
+<div class="container-fluid pt-3 px-auto col-md-6">
+    <div>
+        <h2 class="text-center">Teachers</h2>
+        <div>
+        <ul class="list-group">
+            {% for teacher in teachers %}
+            
+                <li class="list-group-item dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{teacher.first_name}} {{teacher.last_name}}</li>
+                {% for classroom in classrooms %}
+                    {% if classroom.teacher_id == teacher %}
+                        <ul class="dropdown-menu">
+                            <li class="list-group-item">{{classroom}} </li>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+                
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{% url "register_teacher" %}">Add Teacher</a>
+</div>
+{{classrooms}}
+{{parents}}

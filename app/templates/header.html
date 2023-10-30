@@ -4,46 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-      {% load bootstrap5 %}
-  {% bootstrap_css %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 
-{#    <link rel="stylesheet" href="../../media/bootstrap-5.0.2-dist/css/bootstrap.min.css" /> <title>Document</title>#}
   </head>
   <body>
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-      <a class="navbar-brand" href="{% url 'index' %}">AlbEdu</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{%url 'student'%}">Students</a>
-          </li>
-          {% if perms.app.view_classroom %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'classrooms'%}">Classrooms</a>
-          </li>
-          {% endif %}          
-        
-{#          {% if perms.app.view_schedule %}#}
-{#          <li class="nav-item">#}
-{#            <a class="nav-link" href="{% url 'schedules'%}">Schedules</a>#}
-{#          </li>#}
-{#          {% endif %}          #}
-        </ul>
-
-        {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">AlbEdu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'student'%}">Students</a>
+            </li>
+            {% if perms.app.view_classroom %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'classrooms'%}">Classrooms</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'users'%}">Users</a>
+            </li>
+          </ul>
+            {% if user.is_authenticated %}
           <form class="form-inline my-2 my-lg-0" action="{% url 'logout' %}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
           </form>
-        {% else %}
+          {% else %}
           <form class="form-inline my-2 my-lg-0" action="{% url 'login' %}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
           </form>
-        {% endif %}
+          {% endif %}      
+        </div>
       </div>
     </nav>
   </body>
-
-
 </html>

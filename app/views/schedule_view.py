@@ -94,7 +94,7 @@ def presence_list_save(request, schedule_id):
         print("Selected Student IDs:", selected_student_ids)
         print("Selected Students:", selected_students)
 
-    return redirect('classrooms')  # Redirect to the student list view
+    return redirect('classrooms') 
 
 
 def presence_list_update(request, schedule_id):

@@ -1,6 +1,10 @@
-from django.forms import CharField, ModelForm, ModelChoiceField, TimeField, ChoiceField, Select, Form, BooleanField
+from django.forms import CharField, ModelForm, ModelChoiceField, PasswordInput
 from .models import Student, Classroom, Schedule, Present
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm  
+from django.forms.fields import EmailField
+from django.core.exceptions import ValidationError  
+
 
 class StudentForm(ModelForm):
     class Meta:
@@ -21,14 +25,13 @@ class StudentForm(ModelForm):
         last_name = initial.capitalize()
         return last_name
     
-class ClassroomForm(ModelForm):
-    
+class ClassroomForm(ModelForm):    
     class Meta:
         model = Classroom
         fields = '__all__'
 
     name = CharField(max_length=255)
-    teacher_id = ModelChoiceField(queryset=User.objects.all())
+    teacher_id = ModelChoiceField(queryset=User.objects.filter(groups__name='Teacher'))
     # created_by = ModelChoiceField(queryset=User.objects.filter(groups__name='Teacher'))
 
 
@@ -42,3 +45,9 @@ class PresenceForm(ModelForm):
     class Meta:
         model = Present
         fields = ['is_present', 'student']
+
+
+class RegisterForm(UserCreationForm):
+    class Meta:
+        model=User
+        fields = ['username','first_name','last_name','password1','password2'] 

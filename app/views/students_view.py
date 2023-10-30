@@ -1,4 +1,5 @@
 from logging import getLogger
+from typing import Any
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from app.forms import StudentForm
@@ -31,8 +32,8 @@ class StudentProfile(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     template_name = 'students/student_profile.html'
     permission_required = "app.view_student"
 
-    # def get_context_data(request):
-    #
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        return super().get_context_data(**kwargs)
 
 
 LOGGER = getLogger()
