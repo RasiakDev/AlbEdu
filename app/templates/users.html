@@ -1,32 +1,52 @@
 {% include "header.html" %}
 
-
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-
 <div class="container-fluid pt-3 px-auto col-md-6">
     <div>
-        <h2 class="text-center">Teachers</h2>
+        <h2 class="text-center">Teachers and Classrooms</h2>
         <div>
-        <ul class="list-group">
+        <ol class="list-group-numbered">
             {% for teacher in teachers %}
             
-                <li class="list-group-item dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{teacher.first_name}} {{teacher.last_name}}</li>
-                {% for classroom in classrooms %}
-                    {% if classroom.teacher_id == teacher %}
-                        <ul class="dropdown-menu">
-                            <li class="list-group-item">{{classroom}} </li>
-                        </ul>
+                <li class="list-group-item list-group-item-info">
+                    {{teacher.first_name}} {{teacher.last_name}}
+                </li>
+                {% for classroom in classrooms %}                
+                <ol class="list-group">
+                    {% if classroom.teacher_id == teacher %}                        
+                            <li class="list-group-item">{{classroom}} </li>                        
                     {% endif %}
+                </ol>    
                 {% endfor %}
                 
             {% endfor %}
-        </ul>
+        </ol>
+        <a class="btn btn-primary justify-right" href="{% url "register_teacher" %}">Add Teacher</a>
         </div>
     </div>
-    <a class="btn btn-primary" href="{% url "register_teacher" %}">Add Teacher</a>
+
 </div>
-{{classrooms}}
-{{parents}}
+
+<div class="container-fluid pt-3 px-auto col-md-6">
+    <div>
+        <h2 class="text-center">Parents and Students</h2>
+        <div>
+        <ol class="list-group-numbered">
+            {% for parent in parents %}
+            
+                <li class="list-group-item list-group-item-info">
+                    {{parent.first_name}} {{parent.last_name}}
+                </li>
+                {% for student in students %}                
+                <ol class="list-group">
+                    {% if student.parent_id == parent%}                        
+                            <li class="list-group-item">{{student}} </li>                        
+                    {% endif %}
+                </ol>    
+                {% endfor %}
+                
+            {% endfor %}
+        </ol>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{% url "register_parent" %}">Add Parent</a>
+</div>

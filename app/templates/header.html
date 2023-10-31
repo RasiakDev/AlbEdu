@@ -13,23 +13,34 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'index' %}">AlbEdu</a>
+        {% if user.is_authenticated %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{%url 'student'%}">Students</a>
+              <a class="nav-link" href="{%url 'student'%}">                
+                {% if perms.app.change_student %}
+                Students
+                {% else %}
+                My Children
+                {% endif %}
+              </a>
             </li>
             {% if perms.app.view_classroom %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'classrooms'%}">Classrooms</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'classrooms'%}">Classrooms</a>
+              </li>
             {% endif %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'users'%}">Users</a>
-            </li>
+            {% if perms.auth.view_user %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users'%}">Users</a>
+              </li>
+            
+            {% endif %}
           </ul>
+          {% endif %}
             {% if user.is_authenticated %}
           <form class="form-inline my-2 my-lg-0" action="{% url 'logout' %}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>

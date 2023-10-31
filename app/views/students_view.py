@@ -3,11 +3,12 @@ from typing import Any
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from app.forms import StudentForm
-from ..models import Student
+from ..models import Student, Present, Schedule
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 
@@ -33,7 +34,21 @@ class StudentProfile(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     permission_required = "app.view_student"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        student = Student.objects.get(id=self.kwargs['pk'])
+        presences = Present.objects.filter(student=student)
+        presence_and_schedules = {}
+        for presence in presences:
+            presence_and_schedules[presence] = Schedule.objects.get(id= presence.schedule.id)
+
+        context['parent'] = User.objects.get(id=student.parent_id.id)
+        context['presence_and_schedules'] = presence_and_schedules
+        absences = [presence for presence in presences if presence.is_present == False]
+        context['absences'] = absences
+        presence_count = len(presences) - len(absences)
+        context['presences'] = presence_count
+        
+        return context
 
 
 LOGGER = getLogger()

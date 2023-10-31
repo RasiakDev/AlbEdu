@@ -1,11 +1,11 @@
 {% include "header.html" %}
-<div class="container-fluid p-0 my-3 border" style="margin: 20px 30px 10px 30px;">
+<div class="container mt-3">
     <table class="table">
         <thead>
             <tr class="thead-light">
                 <th scope="col">Classroom Name</th>
                 <th scope="col">Teacher</th>
-                <th><a href="{%url 'create_classroom' %}">Create Classroom</a></th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -13,9 +13,14 @@
             <tr>
                 <td><a href="{% url "classroom_profile" classroom.id %}">{{classroom.name}}</a></td>
                 <td>{{classroom.teacher_id}}</td>
-                <td><a href="{%url 'update_classroom' classroom.id%}">Edit</a></td>
+                <td><a class="btn btn-primary" href="{% url 'create_schedule' classroom.id%}">Add Schedule</a></td>
+                <td><a class="btn btn-warning" href="{%url 'update_classroom' classroom.id%}">Edit</a></td>
                 <td><a class="btn btn-danger" href="{%url 'delete_classroom' classroom.id%}">Delete</a></td>
             </tr>
             {%endfor%}
         </table>
+        <div class="d-flex flex-row-reverse">
+            <a class="btn btn-primary" href="{%url 'create_classroom' %}">Create Classroom</a>
+
+        </div>
 </div>

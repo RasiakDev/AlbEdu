@@ -65,9 +65,8 @@ class Schedule(models.Model):
         return Student.objects.filter(classroom_id=self.classroom_id)
 
     def __str__(self) -> str:
-        return "%s %s: %s:%s - %s:%s" % \
-            (self.get_week_day(), \
-             self.classroom_id.name, \
+        return "%s: %s:%s - %s:%s" % \
+            (self.classroom_id.name, \
              self.start_hour.hour, \
              double_minutes(self.start_hour.minute), \
              self.end_hour.hour, \

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include "header.html" %}
 </head>
 <body>
-  {% include "header.html" %}
+  
   {% if user.is_authenticated %}
   <h3>
     {% if user.first_name %}Hello, {{ user.first_name }}!
