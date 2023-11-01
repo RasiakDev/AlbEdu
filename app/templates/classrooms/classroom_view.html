@@ -13,9 +13,13 @@
             <tr>
                 <td><a href="{% url "classroom_profile" classroom.id %}">{{classroom.name}}</a></td>
                 <td>{{classroom.teacher_id}}</td>
-                <td><a class="btn btn-primary" href="{% url 'create_schedule' classroom.id%}">Add Schedule</a></td>
-                <td><a class="btn btn-warning" href="{%url 'update_classroom' classroom.id%}">Edit</a></td>
-                <td><a class="btn btn-danger" href="{%url 'delete_classroom' classroom.id%}">Delete</a></td>
+                <td><a class="btn btn-outline-primary" href="{% url 'create_schedule' classroom.id%}">Add Schedule</a></td>
+                <td>
+                    <div>
+                        <a class="btn btn-info" href="{%url 'update_classroom' classroom.id%}">Edit</a>
+                        <a class="btn btn-outline-danger" href="{%url 'delete_classroom' classroom.id%}">Delete</a>
+                    </div>
+                </td>
             </tr>
             {%endfor%}
         </table>

@@ -80,3 +80,8 @@ class Present(models.Model):
 
     def __str__(self):
         return f'{self.student}  {self.is_present}'
+
+
+# class Parent(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     phone = models.CharField(max_length=100)
