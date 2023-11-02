@@ -11,8 +11,18 @@
                       <h4>{{student}}</h4>
                       <p class="text-secondary mb-1">Full Stack Developer</p>
                       <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                      <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <div class="d-flex justify-content-center">
+                        {% if perms.app.change_student %}
+                          <div style="margin: 2px;">
+                            <a class="btn btn-info"  href="{% url "update_student" student.id%}">Edit</a>
+                          </div>
+                        {% endif %}
+                        {% if perms.app.delete_student %}
+                          <div style="margin:2px">
+                            <a class="btn btn-danger"  href="{% url "delete_student" student.id%}">Delete</a>
+                          </div>
+                        {% endif %}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -68,11 +78,7 @@
                   </div>
                   <hr>
                   <div class="row">
-                    {% if perms.app.change_student %}
-                    <div class="col-sm-12">
-                      <a class="btn btn-info"  href="{% url "update_student" student.id%}">Edit</a>
-                    </div>
-                    {% endif %}
+                    
                 </div>
             </div>
         </div>        

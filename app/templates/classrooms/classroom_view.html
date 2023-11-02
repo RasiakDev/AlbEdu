@@ -3,21 +3,29 @@
     <table class="table">
         <thead>
             <tr class="thead-light">
-                <th scope="col">Classroom Name</th>
-                <th scope="col">Teacher</th>
+                <th></th>
+                <th scope="col"><h5>Classroom Name</h5></th>
+                <th scope="col"><h5>Teacher</h5></th>
                 <th></th>
                 <th></th>
             </tr>
         </thead>
             {%for classroom in classrooms%}        
             <tr>
-                <td><a href="{% url "classroom_profile" classroom.id %}">{{classroom.name}}</a></td>
-                <td>{{classroom.teacher_id}}</td>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                    <a class="link-primary" href="{% url "classroom_profile" classroom.id %}">{{classroom.name}}</a>
+                </td>
+                <td>{{classroom.teacher_id.first_name}} {{classroom.teacher_id.last_name}}</td>
                 <td><a class="btn btn-outline-primary" href="{% url 'create_schedule' classroom.id%}">Add Schedule</a></td>
                 <td>
                     <div>
-                        <a class="btn btn-info" href="{%url 'update_classroom' classroom.id%}">Edit</a>
-                        <a class="btn btn-outline-danger" href="{%url 'delete_classroom' classroom.id%}">Delete</a>
+                        {%if perms.app.change_classroom%}
+                            <a class="btn btn-info" href="{%url 'update_classroom' classroom.id%}">Edit</a>
+                        {% endif %}
+                        {% if perms.app.delete_classrom %}
+                            <a class="btn btn-outline-danger" href="{%url 'delete_classroom' classroom.id%}">Delete</a>
+                        {% endif %}
                     </div>
                 </td>
             </tr>

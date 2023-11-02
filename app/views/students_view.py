@@ -58,7 +58,7 @@ class StudentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     form_class = StudentForm
     template_name = 'students/create_student_form.html'
     success_url = reverse_lazy('student')
-    permission_required = "app.create_student"
+    permission_required = "app.add_student"
 
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data.')

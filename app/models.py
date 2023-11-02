@@ -1,7 +1,11 @@
 from datetime import datetime, timedelta
+from django.utils import timezone
 import math
 from django.contrib.auth.models import User, Group
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
+from django.utils.translation import gettext_lazy as _
+
 
 
 class Classroom(models.Model):
@@ -81,7 +85,3 @@ class Present(models.Model):
     def __str__(self):
         return f'{self.student}  {self.is_present}'
 
-
-# class Parent(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     phone = models.CharField(max_length=100)

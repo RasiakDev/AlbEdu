@@ -52,7 +52,8 @@ class ClassroomUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('classrooms')
 
 
-class ClassroomDeleteView(LoginRequiredMixin, DeleteView):
+class ClassroomDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Classroom
     template_name = 'form_confirm_delete.html'
     success_url = reverse_lazy('classrooms')
+    permission_required='app.delete_classroom'

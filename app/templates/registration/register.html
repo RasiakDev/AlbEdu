@@ -1,20 +1,25 @@
 {% include "header.html" %}
 
-<form method="POST" novalidate>
-	{% csrf_token %}
-	<h2>Sign Up</h2>
-		
-	{% for field in form %}
-	<p>
-		{% if field.errors %}
-		<ul class="errorlist">
-			{% for error in field.errors %}
-			<li>{{ error }}</li>
-			{% endfor %}
-		</ul>
-		{% endif %}
-	 	{{ field.label_tag }} {{ field }}
-	</p>
-	{% endfor %}
-	<input type="submit" value="Register" />
-</form>
+{% load crispy_forms_tags %}
+
+    <div class="container pt-3 d-flex justify-content-center">
+        <div class="col-lg-8">
+            <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                {{ form.first_name|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                {{ form.last_name|as_crispy_field }}
+                </div>
+            </div>
+            {{ form.username|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+            {{ form.password1|as_crispy_field }}
+            {{ form.password2|as_crispy_field }}
+            <button type="submit" class="btn btn-success">Save person</button>
+            </form>
+
+        </div>
+    </div>
