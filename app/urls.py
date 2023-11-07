@@ -5,10 +5,12 @@ from app.views.classroom_view import ClassroomCreateView, ClassroomView, Classro
 from app.views.schedule_view import ScheduleView, ScheduleProfile, schedule_form, presence_list, presence_list_save,presence_list_update
 from django.contrib.auth.views import LogoutView
 from app.views.users_view import register_teacher, users_view, register_parent
+from django.views.generic.base import RedirectView
+
 
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
+    path('', RedirectView.as_view(url="students"), name='index'),
     path('accounts/login/', SubmittableLoginView.as_view(), name='login'),
     path('accounts/logout', LogoutView.as_view(), name='logout'),
     path('accounts/register/teacher', register_teacher, name='register_teacher'),

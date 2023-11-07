@@ -1,13 +1,38 @@
 {% include 'header.html' %}
 
 <!-- student_list.html -->
-<form method="post" action="{% url 'presence_list_save' schedule.id%}">
-    {% csrf_token %}
-    {% for student in students %}
-        <label>
-            <input type="checkbox" name="selected_students" value="{{ student.id }}">
-            {{ student.name }}
-        </label><br>
-    {% endfor %}
-    <button type="submit">Submit</button>
-</form>
+<div class="d-flex justify-content-center">
+    <div style="width: 30%;">
+        <form method="post" action="{% url 'presence_list_save' schedule.id%}">
+            {% csrf_token %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Present
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>
+                            {{ student.name }} {{student.last_name}}
+                        </td>
+                        <td>
+                            <input type="checkbox" name="selected_students" value="{{ student.id }}">
+                        </td>
+                    </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</div>

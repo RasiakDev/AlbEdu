@@ -18,7 +18,10 @@
             {{ form.email|as_crispy_field }}
             {{ form.password1|as_crispy_field }}
             {{ form.password2|as_crispy_field }}
-            <button type="submit" class="btn btn-success">Save person</button>
+            <div class="d-flex justify-content-end">
+                <a style="margin-right: 12px; margin-top: 6px;" href="{% url "users" %}">Cancel</a>
+                <button style="margin-right: 6px;" type="submit" class="btn btn-success">Save</button>
+            </div>
             </form>
 
         </div>

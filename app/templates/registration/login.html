@@ -1,29 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    {% include "header.html" %}
-    <div class="container" style="padding: 50px ;width: 400px;height: 200px ;margin-top: 100px; background-color: gainsboro; border: 1px solid gainsboro; border-radius: 6px;">
-        <form class="form-group" method="post" action="{% url 'login' %}" >
+{% comment %} {% include "header.html" %}
+{% load crispy_forms_tags %}
+<div class="container" style="padding: 50px ;width: 400px;height: 200px ;margin-top: 100px; background-color: gainsboro; border: 1px solid gainsboro; border-radius: 6px;">
+    <form class="form-group" method="post" action="{% url 'login' %}" >
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+        </table>
+        
+        <input class="btn btn-primary"  type="submit" value="login">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</div> {% endcomment %}
+
+
+{% include "header.html" %}
+
+{% load crispy_forms_tags %}
+
+    <div class="container pt-3 d-flex justify-content-center">
+        <div class="col-lg-3">
+            <form method="post" novalidate>
             {% csrf_token %}
-            <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-            </table>
+            {{ form.username|as_crispy_field }}
+            {{ form.password|as_crispy_field }}
             
-            <input class="btn btn-primary"  type="submit" value="login">
-            <input type="hidden" name="next" value="{{ next }}">
-        </form>
+            <div class="d-flex justify-content-end">
+                <input class="btn btn-primary"  type="submit" value="Login">
+            </div>
+            </form>
+
+        </div>
     </div>
-</body>
-</html>

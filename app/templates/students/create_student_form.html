@@ -12,7 +12,7 @@
 
     <div class="container pt-3 d-flex justify-content-center">
         <div class="col-lg-8">
-            <form method="post" novalidate>
+            <form method="post" novalidate enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
                 <div class="col-6">
@@ -24,6 +24,8 @@
             </div>
             {{ form.classroom_id|as_crispy_field }}
             {{ form.parent_id|as_crispy_field }}
+            {{ form.phone_number|as_crispy_field }}
+            {{form.profile_picture|as_crispy_field}}
             <button type="submit" class="btn btn-success">Save person</button>
             </form>
 

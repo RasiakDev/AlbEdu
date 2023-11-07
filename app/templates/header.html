@@ -40,7 +40,8 @@
             {% endif %}
           </ul>
           {% endif %}
-            {% if user.is_authenticated %}
+          {% if user.is_authenticated %}
+          <h5 style="color: aliceblue; margin: 6px 15px;">{{user.first_name}} {{user.last_name}}</h5>
           <form class="form-inline my-2 my-lg-0" action="{% url 'logout' %}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
           </form>

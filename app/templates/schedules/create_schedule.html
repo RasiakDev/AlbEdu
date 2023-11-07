@@ -1,11 +1,18 @@
 {% include 'header.html' %}
+
+{% load crispy_forms_tags %}
+
 <div class="d-flex justify-content-center">
-    <div class="p-3 mt-4" style="background-color: #eee; border: 1px solid #eee; border-radius: 6px;">
+    <div class="p-4 mt-4" style="background-color: #eee; border: 1px solid #eee; border-radius: 6px;">
         {% if students %}
             <form method="post">
                 {% csrf_token %}
-               <table>{{form}}</table>
-                <input class="btn btn-success" type="submit" value="Next">
+                {{form.start_hour|as_crispy_field}}
+                {{form.end_hour|as_crispy_field}}
+                <div class="d-flex justify-content-end">
+                    <a class="m-2" type="submit" href="{% url "classrooms" %}">Cancel</a>
+                    <input class="btn btn-success" type="submit" value="Next">
+                </div>
             </form>
         {% else %}
             <h1>No students for this classroom</h1>

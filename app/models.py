@@ -22,6 +22,8 @@ class Student(models.Model):
     name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
     classroom_id = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True)
+    profile_picture = models.ImageField(upload_to = 'images/', height_field=None, width_field=None, max_length=100, null=True, blank=True)
+    phone_number=models.CharField(max_length=15, null=True, blank=True)
     parent_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 

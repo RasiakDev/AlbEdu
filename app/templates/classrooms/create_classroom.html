@@ -13,8 +13,10 @@
                 {{ form.teacher_id|as_crispy_field }}
                 </div>
             </div>
-            
-            <button type="submit" class="btn btn-success">Save person</button>
+            <div class="d-flex justify-content-end">
+                <a style="margin-right: 12px; margin-top: 6px;" href="{% url "classrooms" %}">Cancel</a>
+                <button style="margin-right: 6px;" type="submit" class="btn btn-success">Save</button>
+            </div>
             </form>
 
         </div>
