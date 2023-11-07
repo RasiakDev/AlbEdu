@@ -5,7 +5,10 @@ from app.forms import RegisterForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User, Group
 from app.models import Classroom, Student
+from django.contrib.auth.decorators import login_required, permission_required
 
+@login_required(redirect_field_name='login')
+@permission_required("auth.add_user")
 def register_teacher(request):
     if request.method == 'GET':
         form = RegisterForm()
@@ -25,7 +28,8 @@ def register_teacher(request):
         else:
             return render(request, 'registration/register.html', {'form': form})
         
-
+@login_required(redirect_field_name='login')
+@permission_required("auth.add_user")
 def register_parent(request):
     if request.method == 'GET':
         form = RegisterForm()
@@ -44,7 +48,8 @@ def register_parent(request):
         else:
             return render(request, 'registration/register.html', {'form': form})
         
-        
+@login_required(redirect_field_name='login')
+@permission_required("auth.view_user")
 def users_view(request):
     teachers = User.objects.filter(groups__name='Teacher')
     parents= User.objects.filter(groups__name='Parent')

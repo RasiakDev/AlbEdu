@@ -6,7 +6,7 @@ from app.models import Classroom, Schedule, Student, Present
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 class ScheduleView(LoginRequiredMixin, PermissionRequiredMixin,View):
@@ -32,7 +32,7 @@ class ScheduleProfile(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
 # add schedule time and classroom id
 @login_required(redirect_field_name='login')
-
+@permission_required("app.add_schedule")
 def schedule_form(request, classroom_id):
     classroom = Classroom.objects.get(pk=classroom_id)
     students = Student.objects.filter(classroom_id=classroom_id)
@@ -56,7 +56,7 @@ def schedule_form(request, classroom_id):
 
 # show the list of students with the checkbox
 @login_required(redirect_field_name='login')
-
+@permission_required("app.add_present")
 def presence_list(request, schedule_id):
     schedule = Schedule.objects.get(pk=schedule_id)
     students = Student.objects.filter(classroom_id=schedule.classroom_id.id)
@@ -73,6 +73,7 @@ def presence_list(request, schedule_id):
 
 # save the Present object
 @login_required(redirect_field_name='login')
+@permission_required("app.add_present")
 def presence_list_save(request, schedule_id):
     schedule = Schedule.objects.get(pk=schedule_id)
     students = Student.objects.filter(classroom_id=schedule.classroom_id.id)
@@ -96,7 +97,8 @@ def presence_list_save(request, schedule_id):
 
     return redirect('classrooms') 
 
-
+@login_required(redirect_field_name='login')
+@permission_required("app.change_present")
 def presence_list_update(request, schedule_id):
     schedule = Schedule.objects.get(pk=schedule_id)
     students = Student.objects.filter(classroom_id=schedule.classroom_id.id)

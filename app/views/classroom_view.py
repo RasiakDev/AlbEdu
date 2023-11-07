@@ -45,10 +45,11 @@ class ClassroomCreateView(LoginRequiredMixin,PermissionRequiredMixin, CreateView
         return super().form_invalid(form)
 
 
-class ClassroomUpdateView(LoginRequiredMixin, UpdateView):
+class ClassroomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Classroom
     fields = '__all__'
     template_name = 'classrooms/create_classroom.html'
+    permission_required = "app.change_classroom"
     success_url = reverse_lazy('classrooms')
 
 

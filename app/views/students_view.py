@@ -9,10 +9,11 @@ from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 @login_required(redirect_field_name='login')
+@permission_required("app.view_student")
 def student_view(request):
     # shows to parents only their child
     def show_students(request):
