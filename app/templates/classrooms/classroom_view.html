@@ -14,7 +14,7 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>
-                    <a class="link-primary" href="{% url "classroom_profile" classroom.id %}">{{classroom.name}}</a>
+                    <a class="link-offset-3" style="text-decoration:none;" href="{% url "classroom_profile" classroom.id %}"><h5>{{classroom.name}}</h5></a>
                 </td>
                 <td>{{classroom.teacher_id.first_name}} {{classroom.teacher_id.last_name}}</td>
                 <td><a class="btn btn-outline-primary" href="{% url 'create_schedule' classroom.id%}">Add Schedule</a></td>

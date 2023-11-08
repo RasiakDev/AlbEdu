@@ -1,11 +1,16 @@
 from django.contrib.auth import forms  
 from django.shortcuts import redirect, render  
-from django.contrib import messages  
-from app.forms import RegisterForm
-from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
+from django.urls import reverse_lazy  
+from app.forms import RegisterForm, UpdateUserForm
 from django.contrib.auth.models import User, Group
 from app.models import Classroom, Student
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic import UpdateView
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin, PermissionRequiredMixin
+)
+
 
 @login_required(redirect_field_name='login')
 @permission_required("auth.add_user")
@@ -58,3 +63,44 @@ def users_view(request):
     return render(request, 'users.html', {'teachers': teachers, 'parents': parents, 'classrooms': classrooms, 'students': students})
 
 
+
+class UserUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = User
+    template_name = 'registration/register.html'
+    fields = '__all__'
+    success_url = reverse_lazy('users')
+    permission_required = 'auth.change_user'
+
+@login_required(login_url='login')
+@permission_required("auth.delete_user")
+def del_user(request, id):
+    user = User.objects.get(id=id) # we need this for both GET and POST
+
+    if request.method == 'POST':
+        # delete the band from the database
+        user.delete()
+        # redirect to the bands list
+        return redirect('users')
+
+    # no need for an `else` here. If it's a GET request, just continue
+
+    return render(request,
+                    'registration/confirm_delete_user.html',
+                    {'user': user})
+
+
+@login_required(login_url='lodin')
+@permission_required('auth.change_user')
+def update_user(request, id):
+    user = User.objects.get(id=id)
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='users')
+    else:
+        user_form = UpdateUserForm(instance=user)
+
+    return render(request, 'registration/update_user.html', {'form': user_form})

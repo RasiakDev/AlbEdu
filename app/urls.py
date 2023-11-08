@@ -4,7 +4,7 @@ from app.views.students_view import StudentCreateView, StudentUpdateView, Studen
 from app.views.classroom_view import ClassroomCreateView, ClassroomView, ClassroomUpdateView, ClassroomProfile, ClassroomDeleteView
 from app.views.schedule_view import ScheduleView, ScheduleProfile, schedule_form, presence_list, presence_list_save,presence_list_update
 from django.contrib.auth.views import LogoutView
-from app.views.users_view import register_teacher, users_view, register_parent
+from app.views.users_view import register_teacher, users_view, register_parent, del_user, update_user
 from django.views.generic.base import RedirectView
 
 
@@ -35,7 +35,9 @@ urlpatterns = [
     path('schedules/create/presence_list_save/<int:schedule_id>', presence_list_save, name='presence_list_save'),
     path('schedules/create/presence_list_update/<int:schedule_id>', presence_list_update, name='presence_list_update'),
 
-    path('users/', users_view, name='users')
+    path('users/', users_view, name='users'),
+    path('users/update/<int:id>', update_user, name='update_user'),
+    path('user/delete/<int:id>', del_user, name='delete_user')
 
 
     ]

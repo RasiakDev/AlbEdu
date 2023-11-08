@@ -1,0 +1,26 @@
+{% include "header.html" %}
+
+{% load crispy_forms_tags %}
+
+    <div class="container pt-3 d-flex justify-content-center">
+        <div class="col-lg-8">
+            <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                {{ form.first_name|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                {{ form.last_name|as_crispy_field }}
+                </div>
+            </div>
+            {{ form.username|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+            <div class="d-flex justify-content-end">
+                <a style="margin-right: 12px; margin-top: 6px;" href="{% url "users" %}">Cancel</a>
+                <button style="margin-right: 6px;" type="submit" class="btn btn-success">Save</button>
+            </div>
+            </form>
+
+        </div>
+    </div>

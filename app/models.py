@@ -83,6 +83,7 @@ class Present(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     is_present = models.BooleanField(default=True)
+    notes = models.TextField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return f'{self.student}  {self.is_present}'

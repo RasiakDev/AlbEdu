@@ -1,4 +1,4 @@
-from django.forms import CharField, ModelForm, ModelChoiceField, ImageField, ValidationError
+from django.forms import CharField, ModelForm, ModelChoiceField, ImageField, TextInput, ValidationError
 from .models import Student, Classroom, Schedule, Present
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm  
@@ -54,11 +54,22 @@ class ScheduleForm(ModelForm):
 class PresenceForm(ModelForm):
     class Meta:
         model = Present
-        fields = ['is_present', 'student']
+        fields = ['is_present', 'student', 'notes']
 
 
 class RegisterForm(UserCreationForm):
     class Meta:
         model=User
         fields = ['first_name','last_name', 'username','email', 'password1', 'password2'] 
+
+class UpdateUserForm(ModelForm):
+    username = CharField(max_length=100,
+                               required=True,
+                               widget=TextInput(attrs={'class': 'form-control'}))
+    email = EmailField(required=True,
+                             widget=TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email']
 

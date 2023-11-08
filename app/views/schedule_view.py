@@ -64,11 +64,8 @@ def presence_list(request, schedule_id):
         form = PresenceForm()
     else:
         form = PresenceForm()
-    if request.user.is_authenticated:
         return render(request, 'schedules/presence_list.html',
                       {'schedule': schedule, 'students': students, 'form': form})
-    else:
-        return redirect('login')
 
 
 # save the Present object
@@ -81,13 +78,17 @@ def presence_list_save(request, schedule_id):
         selected_student_ids = request.POST.getlist('selected_students')
         selected_students = Student.objects.filter(id__in=selected_student_ids)
         not_selected_students = students.exclude(id__in=selected_students.values_list('id', flat=True))
+        
 
         for student in selected_students:
-            new_obj = Present.objects.create(schedule_id=schedule_id, student=student, is_present=True)
+            note = request.POST.get(f'note{student.id}')
+            new_obj = Present.objects.create(schedule_id=schedule_id, student=student, is_present=True, notes=note)
             new_obj.save()
+            
 
         for student in not_selected_students:
-            new_obj = Present.objects.create(schedule_id=schedule_id, student=student, is_present=False)
+            note = request.POST.get(f'note{student.id}')
+            new_obj = Present.objects.create(schedule_id=schedule_id, student=student, is_present=False, notes= note)
             new_obj.save()
         print("Not selected Students:", not_selected_students)
 
@@ -109,15 +110,17 @@ def presence_list_update(request, schedule_id):
 
         for student in selected_students:
             try:
+                note = request.POST.get(f'note{student.id}')
                 current_presence_to_update = Present.objects.filter(schedule_id=schedule_id, student_id=student.id)
-                current_presence_to_update.update(is_present=True)
+                current_presence_to_update.update(is_present=True, notes = note)
             except:
                 print("SELECTED STUDENTS DOES NOT EXIST---------------------")
 
         for student in not_selected_students:
             try:
+                note = request.POST.get(f'note{student.id}')
                 current_presence_to_update = Present.objects.filter(schedule_id=schedule_id, student_id=student.id)
-                current_presence_to_update.update(is_present=False)
+                current_presence_to_update.update(is_present=False, notes = note)
             except Present.DoesNotExist:
                 print("NOT SELECTED STUDENTS DOES NOT EXIST-----------------")
 
