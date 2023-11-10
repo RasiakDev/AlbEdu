@@ -6,6 +6,8 @@
                 <th></th>
                 <th scope="col"><h5>Classroom Name</h5></th>
                 <th scope="col"><h5>Teacher</h5></th>
+                <th class="text-center" scope="col"><h5>Students</h5></th>
+                <th class="text-center" scope="col"><h5>Schedules</h5></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -17,17 +19,23 @@
                     <a class="link-offset-3" style="text-decoration:none;" href="{% url "classroom_profile" classroom.id %}"><h5>{{classroom.name}}</h5></a>
                 </td>
                 <td>{{classroom.teacher_id.first_name}} {{classroom.teacher_id.last_name}}</td>
+                <td class="text-center">
+                    {{number_of_students|get_item:classroom}}
+                </td>
+                <td class="text-center">
+                    {{number_of_schedules|get_item:classroom}}
+                </td>
                 <td><a class="btn btn-outline-primary" href="{% url 'create_schedule' classroom.id%}">Add Schedule</a></td>
                 <td>
                     <div>
                         {%if perms.app.change_classroom%}
-                            <a class="btn btn-info" href="{%url 'update_classroom' classroom.id%}">Edit</a>
+                            <a class="btn btn-info" href="{%url 'update_classroom' classroom.id%}">Edit Classroom</a>
                         {% endif %}
                         {% if perms.app.delete_classrom %}
                             <a class="btn btn-outline-danger" href="{%url 'delete_classroom' classroom.id%}">Delete</a>
                         {% endif %}
                     </div>
-                </td>
+                </td>                
             </tr>
             {%endfor%}
         </table>

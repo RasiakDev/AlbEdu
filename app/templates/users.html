@@ -23,8 +23,12 @@
                 <td>{{teacher.username}}</td>
                 <td>{{teacher.email}}</td>
                 <td>
+                    {% if perms.auth.change_user %}
                     <a class="btn btn-outline-info" href="{% url "update_user" teacher.id %}">Edit</a>
+                    {% endif %}
+                    {% if perms.auth.delete_user %}
                     <a class="btn btn-danger" style="margin-left: 6px;" href="{% url "delete_user" teacher.id %}">Delete</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
@@ -57,8 +61,12 @@
                 <td>{{parent.username}}</td>
                 <td>{{parent.email}}</td>
                 <td>
+                    {% if perms.auth.change_user %}
                     <a class="btn btn-outline-info" href="{% url "update_user" parent.id %}">Edit</a>
+                    {% endif %}
+                    {% if perms.auth.delete_user %}
                     <a style="margin-left: 6px;" class="btn btn-danger" href="{% url "delete_user" parent.id %}">Delete</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

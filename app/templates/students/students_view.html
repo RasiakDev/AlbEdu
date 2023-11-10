@@ -14,6 +14,12 @@
                 <th>
                     <h5>Parent</h5>
                 </th>            
+                <th class="text-center">
+                    <h5>Presences</h5>
+                </th>            
+                <th class="text-center">
+                    <h5>Absences</h5>
+                </th>            
                 <th>
                     <h5>Phone</h5>
                 </th>            
@@ -32,13 +38,24 @@
                         </a>
                     </td>
                     <td>
-                        Classroom
+                        {{students_classroom|get_item:object}}
                     </td>
                     <td>
                         {{object.parent_id.first_name}} {{object.parent_id.last_name}}
                     </td>
+                    <td class="text-center">
+                        {{presences_and_absences|get_item:object|first}}
+                    </td>
+                    <td class="text-center">
+                        {{presences_and_absences|get_item:object|last}}
+                    </td>
                     <td>
+                        {% if object.phone_number %}
                         {{object.phone_number}}
+                        {% else %}
+                        <h5>-</h5>
+                        {% endif %}
+                        
                     </td>
                     <td>
                         <div>

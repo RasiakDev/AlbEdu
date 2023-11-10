@@ -3,18 +3,33 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from app.forms import ClassroomForm
 from django.views.generic import CreateView, View, UpdateView, DetailView, DeleteView
-from app.models import Classroom, Schedule
+from app.models import Classroom, Schedule, Student
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
+from django.template.defaulttags import register
 
 
 class ClassroomView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = "app.view_classroom"
 
     def get(self, request, *args, **kwargs):
-        context = {'classrooms': Classroom.objects.all()}
+        classrooms = Classroom.objects.all()
+        schedules = Schedule.objects.all()
+        number_of_students = {}
+        number_of_schedules = {}
+        for classroom in classrooms:
+            number_of_students[classroom] = len(Student.objects.filter(classroom_id=classroom))
+            number_of_schedules[classroom] = len(Schedule.objects.filter(classroom_id=classroom))       
+
+        print(number_of_students)
+        context = {'classrooms': classrooms, 'number_of_students' : number_of_students, 'number_of_schedules' : number_of_schedules}
         return render(request, "classrooms/classroom_view.html", context=context)
+    
+    @register.filter
+    def get_item(dictionary, key):
+        return dictionary.get(key)
+    
 
 
 class ClassroomProfile(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
