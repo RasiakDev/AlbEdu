@@ -48,7 +48,9 @@ def student_view(request):
 class StudentProfile(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Student
     template_name = 'students/student_profile.html'
-    permission_required = "app.view_student"    
+    permission_required = "app.view_student"
+
+    
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -59,6 +61,9 @@ class StudentProfile(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
             presence_and_schedules[presence] = Schedule.objects.get(id= presence.schedule.id)
 
         parent = User.objects.get(id=student.parent_id.id)
+        current_user = self.request.user
+        users_groups = [group.name for group in current_user.groups.all()]
+        context['user_groups'] = users_groups
         context['parent'] = parent
         context['presence_and_schedules'] = presence_and_schedules
         absences = [presence for presence in presences if presence.is_present == False]

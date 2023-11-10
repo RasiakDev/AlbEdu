@@ -1,5 +1,8 @@
 {% include "header.html" %}
-<div class="container mt-4">
+
+{% if 'Parent' in user_groups %}
+  {% if user.id == parent.id %}
+  <div class="container mt-4">
     <div class="main-body">    
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -170,3 +173,184 @@
       </div>
     </div>
   </section>
+  {% else %}
+  <div class="container d-flex justify-content-center">
+    <div class="mt-5">
+      <h1>NOT YOUR KID</h1>
+    </div>
+  </div>
+  {% endif %}
+  {% else %}
+  <div class="container mt-4">
+    <div class="main-body">    
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img 
+                    {% if student.profile_picture %}
+                    src="{{student.profile_picture.url}}"
+                    {% else %}
+                    src="../../../media/images/avatar7.png"            
+                    {% endif %}
+                    alt="Student Photo" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>{{student}}</h4>
+                      <p class="text-secondary mb-1">{{student.classroom_id}}</p>
+                      {% comment %} <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p> {% endcomment %}
+                      <div class="d-flex justify-content-center">
+                        {% if perms.app.change_student %}
+                          <div style="margin: 2px;">
+                            <a class="btn btn-info"  href="{% url "update_student" student.id%}">Edit</a>
+                          </div>
+                        {% endif %}
+                        {% if perms.app.delete_student %}
+                          <div style="margin:2px">
+                            <a class="btn btn-danger"  href="{% url "delete_student" student.id%}">Delete</a>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>              
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{student}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      fip@jukmuh.al
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{student.phone_number}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Parent</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{parent.first_name}}
+                      {{parent.last_name}}
+                    </div>
+                  </div>
+                  
+                    
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+</div>
+</div>
+
+{% comment %} -------------------------------------------Schedules------------------------------------------------ {% endcomment %}
+<section  style="background-color: #eee; height: 100%">    
+    <div class="container py-5 h-100">     
+        <div class="row d-flex justify-content-center align-items-center h-100">
+
+
+{% comment %} ----------------------------------------------Counter---------------------------------------------- {% endcomment %}
+        <div class="counter">
+            <div class="row">
+                <div class="col-6 col-lg-4">
+                    <div class="count-data text-center">
+                        <h3 class="m-0px font-w-600">Total Hours</h3>
+                        <h6 class="count h2 opacity-75" data-to="500" data-speed="500">{{presence_and_schedules|length}}</h6>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <div class="count-data text-center">
+                        <h4 class="m-0h4x font-w-600">Presences</h4>
+                        <p class="count h2 opacity-75" data-to="150" data-speed="150">{{presences}}</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <div class="count-data text-center">
+                        <h4 class="m-0px font-w-600">Absences</h4>
+                        <p class="count h2 opacity-75" data-to="850" data-speed="850">{{absences|length}}</p>
+                    </div>
+                </div>               
+            </div>
+        </div>
+
+{% comment %} ----------------------------------------------End Counter---------------------------------------------- {% endcomment %}
+   
+        <div class="col-md-12 col-xl-10 h-100 mt-4">  
+          <div class="h-100">
+            <div class="card-header p-3">
+              <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Schedules</h5>
+            </div>
+            <div class="card-body h-100" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px"> 
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Class Hour</th>
+                    <th scope="col">Presence</th>
+                    <th scope="col">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for presence, schedule in presence_and_schedules.items %}
+                  <tr class="fw-normal">
+                    
+                    <td class="align-middle">
+                      <span>{{schedule.created}}</span>
+                    </td>
+                    <td class="align-middle">
+                        {{schedule}}
+                    </td>
+                    <td class="align-middle">
+                        {% if presence.is_present %}
+                            <h6 class="mb-0"><span class="badge bg-success ">Present</span></h6>
+                        {% else %}
+                            <h6 class="mb-0"><span class="badge bg-danger">Absent</span></h6>
+                        {% endif %}                    
+                    </td>
+                    <td>
+                      {% if presence.notes %}
+                      <p>{{presence.notes}}</p>
+                      {% else %}
+                      -
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+  
+            </div>
+            <div class="card-footer text-end p-3">
+              {% comment %} <button class="me-2 btn btn-link">Cancel</button>
+              <button class="btn btn-primary">Add Task</button> {% endcomment %}
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
